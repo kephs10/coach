@@ -121,12 +121,12 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getNomcomplet(): ?string
+    public function getnomcomplet(): ?string
     {
         return $this->nomcomplet;
     }
 
-    public function setNomcomplet(string $nomcomplet): self
+    public function setnomcomplet(string $nomcomplet): self
     {
         $this->nomcomplet = $nomcomplet;
 
