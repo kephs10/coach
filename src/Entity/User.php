@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements AdvancedUserInterface
 {
     /**
      * @ORM\Id()
@@ -44,7 +48,7 @@ class User implements UserInterface
     private $isActif;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\role", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      */
     private $role;
 
@@ -156,4 +160,25 @@ class User implements UserInterface
 
         return $this;
     }
+  
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
 }
