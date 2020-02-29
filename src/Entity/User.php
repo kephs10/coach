@@ -8,7 +8,22 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ApiResource()
+ ** @ApiResource(
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"user:read", "user:item:get"}},
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('POST_EDIT', object)",
+ *              "access_control_message"="Accés non autorisé"
+ *          },
+ *          "delete"={"access_control"="is_granted('POST_EDIT',object)"}
+ *     },
+ *     collectionOperations={
+ *          "get"={"access_control"="is_granted('ROLE_ADMIN')"},
+ *          "post"={"access_control"="is_granted('POST_EDIT',object)"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -120,8 +135,7 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+       
     }
 
     public function getnomcomplet(): ?string
