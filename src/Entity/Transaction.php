@@ -26,17 +26,17 @@ class Transaction
     /**
      * @ORM\Column(type="integer")
      */
-    private $partPartenaire;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $part;
 
     /**
      * @ORM\Column(type="integer")
      */
     private $frais;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Compte", inversedBy="transaction")
+     */
+    private $compte;
 
     
 
@@ -53,18 +53,6 @@ class Transaction
     public function setPartEtat(int $partEtat): self
     {
         $this->partEtat = $partEtat;
-
-        return $this;
-    }
-
-    public function getPartPartenaire(): ?int
-    {
-        return $this->partPartenaire;
-    }
-
-    public function setPartPartenaire(int $partPartenaire): self
-    {
-        $this->partPartenaire = $partPartenaire;
 
         return $this;
     }
@@ -89,6 +77,18 @@ class Transaction
     public function setFrais(int $frais): self
     {
         $this->frais = $frais;
+
+        return $this;
+    }
+
+    public function getCompte(): ?Compte
+    {
+        return $this->compte;
+    }
+
+    public function setCompte(?Compte $compte): self
+    {
+        $this->compte = $compte;
 
         return $this;
     }

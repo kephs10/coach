@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        $user1 = new User("adminsup");
+        $user1 = new User();
         $user1->setPassword($this->encoder->encodePassword($user1, "voila"));
         $user1->setnomcomplet("kadiona thales ndecky");
         $user1->setRoles(array("ROLE_SUP_ADMIN"));

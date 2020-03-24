@@ -3,12 +3,20 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * Secured resource.
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_CAISSIER')"},
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN'||'ROLE_SUP_ADMIN')"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CompteRepository")
  */
 class Compte
@@ -21,7 +29,16 @@ class Compte
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Assert\Length(
+     *      min = 9,
+     *      max = 255,
+     *      minMessage = "Your number compte must be at least {{ limit }} characters long",
+     *      maxMessage = "Your number compte cannot be longer than {{ limit }} characters"
+     * )
      */
     private $numCompte;
 
@@ -31,21 +48,22 @@ class Compte
     private $solde;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="compte")
+     * @ORM\ManyToOne(targetEntity="App\Entity\partenaire", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $partenaire;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\affectation", mappedBy="compte")
+     * @ORM\OneToMany(targetEntity="App\Entity\transaction", mappedBy="compte")
      */
-    private $affectation;
+    private $transaction;
 
     public function __construct()
     {
-        $this->affectation = new ArrayCollection();
+        $this->transaction = new ArrayCollection();
     }
 
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -75,12 +93,12 @@ class Compte
         return $this;
     }
 
-    public function getPartenaire(): ?Partenaire
+    public function getPartenaire(): ?partenaire
     {
         return $this->partenaire;
     }
 
-    public function setPartenaire(?Partenaire $partenaire): self
+    public function setPartenaire(?partenaire $partenaire): self
     {
         $this->partenaire = $partenaire;
 
@@ -88,33 +106,34 @@ class Compte
     }
 
     /**
-     * @return Collection|affectation[]
+     * @return Collection|transaction[]
      */
-    public function getAffectation(): Collection
+    public function getTransaction(): Collection
     {
-        return $this->affectation;
+        return $this->transaction;
     }
 
-    public function addAffectation(affectation $affectation): self
+    public function addTransaction(transaction $transaction): self
     {
-        if (!$this->affectation->contains($affectation)) {
-            $this->affectation[] = $affectation;
-            $affectation->setCompte($this);
+        if (!$this->transaction->contains($transaction)) {
+            $this->transaction[] = $transaction;
+            $transaction->setCompte($this);
         }
 
         return $this;
     }
 
-    public function removeAffectation(affectation $affectation): self
+    public function removeTransaction(transaction $transaction): self
     {
-        if ($this->affectation->contains($affectation)) {
-            $this->affectation->removeElement($affectation);
+        if ($this->transaction->contains($transaction)) {
+            $this->transaction->removeElement($transaction);
             // set the owning side to null (unless already changed)
-            if ($affectation->getCompte() === $this) {
-                $affectation->setCompte(null);
+            if ($transaction->getCompte() === $this) {
+                $transaction->setCompte(null);
             }
         }
 
         return $this;
     }
+
 }

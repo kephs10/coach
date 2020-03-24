@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1a223ac1dda2fd0061051b794ed2e73",
+    "content-hash": "56027d2be79cf1a8a0f3c4fc32b1eaa3",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3199,16 +3199,16 @@
             "time": "2019-12-01T08:34:52+00:00"
         },
         {
-            "name": "symfony/dotenv",
+            "name": "symfony/",
             "version": "v4.3.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/dotenv.git",
+                "url": "https://github.com/symfony/.git",
                 "reference": "62d93bf07edd0d76f033d65a7fd1c1ce50d28b50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dotenv/zipball/62d93bf07edd0d76f033d65a7fd1c1ce50d28b50",
+                "url": "https://api.github.com/repos/symfony//zipball/62d93bf07edd0d76f033d65a7fd1c1ce50d28b50",
                 "reference": "62d93bf07edd0d76f033d65a7fd1c1ce50d28b50",
                 "shasum": ""
             },
@@ -3226,7 +3226,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Symfony\\Component\\Dotenv\\": ""
+                    "Symfony\\Component\\\\": ""
                 },
                 "exclude-from-classmap": [
                     "/Tests/"
@@ -3249,7 +3249,7 @@
             "description": "Registers environment variables from a .env file",
             "homepage": "https://symfony.com",
             "keywords": [
-                "dotenv",
+                "",
                 "env",
                 "environment"
             ],
@@ -3553,7 +3553,7 @@
             },
             "require-dev": {
                 "composer/composer": "^1.0.2",
-                "symfony/dotenv": "^3.4|^4.0|^5.0",
+                "symfony/": "^3.4|^4.0|^5.0",
                 "symfony/phpunit-bridge": "^3.4.19|^4.1.8|^5.0",
                 "symfony/process": "^2.7|^3.0|^4.0|^5.0"
             },
@@ -3618,7 +3618,7 @@
                 "symfony/browser-kit": "<4.3",
                 "symfony/console": "<4.3",
                 "symfony/dom-crawler": "<4.3",
-                "symfony/dotenv": "<4.2",
+                "symfony/": "<4.2",
                 "symfony/form": "<4.3.5",
                 "symfony/messenger": "<4.3.6",
                 "symfony/property-info": "<3.4",
@@ -5285,16 +5285,16 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v4.3.9",
+            "version": "v4.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
-                "reference": "539484217f9966aa93e01915c5035c74b6ea1b9b"
+                "reference": "0d2dcf4ae26db5b6781f40fcab9785f427ee7fa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/validator/zipball/539484217f9966aa93e01915c5035c74b6ea1b9b",
-                "reference": "539484217f9966aa93e01915c5035c74b6ea1b9b",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/0d2dcf4ae26db5b6781f40fcab9785f427ee7fa4",
+                "reference": "0d2dcf4ae26db5b6781f40fcab9785f427ee7fa4",
                 "shasum": ""
             },
             "require": {
@@ -5374,7 +5374,7 @@
             ],
             "description": "Symfony Validator Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-30T08:28:34+00:00"
+            "time": "2020-01-31T09:10:37+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -6097,7 +6097,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
-    "prefer-stable": true,
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1.3",

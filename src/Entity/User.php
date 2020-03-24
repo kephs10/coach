@@ -3,27 +3,15 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
- ** @ApiResource(
- *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"user:read", "user:item:get"}},
- *          },
- *          "put"={
- *              "access_control"="is_granted('POST_EDIT', object)",
- *              "access_control_message"="Accés non autorisé"
- *          },
- *          "delete"={"access_control"="is_granted('POST_EDIT',object)"}
- *     },
- *     collectionOperations={
- *          "get"={"access_control"="is_granted('ROLE_ADMIN')"},
- *          "post"={"access_control"="is_granted('POST_EDIT',object)"}
- *     }
- * )
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -66,6 +54,18 @@ class User implements UserInterface
      */
     private $role;
 
+    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\partenaire", inversedBy="users")
+     */
+    private $partenaire;
+
+    public function __construct()
+    {
+        $this->comptes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,11 +93,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return[ $this->role->getLibelle()];
     }
 
     public function setRoles(array $roles): self
@@ -170,6 +166,19 @@ class User implements UserInterface
     public function setRole(?role $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+   
+
+    public function getPartenaire(): ?partenaire
+    {
+        return $this->partenaire;
+    }
+
+    public function setPartenaire(?partenaire $partenaire): self
+    {
+        $this->partenaire = $partenaire;
 
         return $this;
     }

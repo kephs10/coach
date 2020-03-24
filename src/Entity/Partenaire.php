@@ -50,16 +50,20 @@ class Partenaire
      */
     private $contrat;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="partenaire")
+     */
+    private $comptes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\compte", mappedBy="partenaire", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="partenaire")
      */
-    private $compte;
+    private $users;
 
     public function __construct()
     {
+        $this->comptes = new ArrayCollection();
         $this->users = new ArrayCollection();
-        $this->compte = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,6 +139,68 @@ class Partenaire
     public function setContrat(string $contrat): self
     {
         $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Compte[]
+     */
+    public function getComptes(): Collection
+    {
+        return $this->comptes;
+    }
+
+    public function addCompte(Compte $compte): self
+    {
+        if (!$this->comptes->contains($compte)) {
+            $this->comptes[] = $compte;
+            $compte->setPartenaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompte(Compte $compte): self
+    {
+        if ($this->comptes->contains($compte)) {
+            $this->comptes->removeElement($compte);
+            // set the owning side to null (unless already changed)
+            if ($compte->getPartenaire() === $this) {
+                $compte->setPartenaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setPartenaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getPartenaire() === $this) {
+                $user->setPartenaire(null);
+            }
+        }
 
         return $this;
     }

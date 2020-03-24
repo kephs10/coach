@@ -6,7 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * Secured resource.
+ *
+ * @ApiResource(
+ *     collectionOperations={
+ *         "get",
+ *      "post"={"security"="is_granted('ROLE_ADMIN'||'ROLE_SUP_ADMIN'||'Partenaire')"}
+ *    }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AffectationRepository")
  */
 class Affectation
@@ -27,11 +34,6 @@ class Affectation
      * @ORM\Column(type="datetime")
      */
     private $dateFin;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Compte", inversedBy="affectation")
-     */
-    private $compte;
 
     public function getId(): ?int
     {
@@ -58,18 +60,6 @@ class Affectation
     public function setDateFin(\DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
-
-        return $this;
-    }
-
-    public function getCompte(): ?Compte
-    {
-        return $this->compte;
-    }
-
-    public function setCompte(?Compte $compte): self
-    {
-        $this->compte = $compte;
 
         return $this;
     }

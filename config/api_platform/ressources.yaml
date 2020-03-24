@@ -1,0 +1,23 @@
+# api/config/api_platform/resources.yaml
+App\Entity\Compte:
+    attributes:
+        security: 'is_granted("ROLE_CAISSIER")'
+    collectionOperations:
+        get: ~
+        post:
+            security: 'is_granted("ROLE_ADMIN"||"ROLE_SUP_ADMIN")'
+    itemOperations:
+        get: ~
+        put:
+            security: 'is_granted("ROLE_ADMIN"||"ROLE_SUP_ADMIN")'
+            
+App\Entity\Affectation:
+    attributes:
+    collectionOperations:
+        get: ~
+        post:
+            security: 'is_granted("ROLE_ADMIN"||"ROLE_SUP_ADMIN"||"Partenaire")'
+    itemOperations:
+        get: ~
+        put:
+            security: 'is_granted("ROLE_ADMIN"||"ROLE_SUP_ADMIN"||"Partenaire")'
